@@ -1,0 +1,26 @@
+{
+  "name": "carwings3",
+  "version": "0.0.1",
+  "description": "A Node.js client library for the Nissan Leaf \"Carwings\" API",
+  "main": "release/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirfergy/carwings3.git"
+  },
+  "author": "Sean Ferguson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sirfergy/carwings3/issues"
+  },
+  "homepage": "https://github.com/sirfergy/carwings3#readme",
+  "devDependencies": {
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1",
+    "@types/request": "^2.47.0"
+  },
+  "dependencies": {
+    "@types/request-promise-native": "^1.0.14",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
