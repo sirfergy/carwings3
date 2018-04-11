@@ -30,8 +30,7 @@ export class Service {
             this.accountId = response.accountID;
             this.authToken = response.authToken;
             return true;
-        }
-        catch {
+        } catch {
             return false;
         }
     }
@@ -111,7 +110,7 @@ export class Service {
             ...this._getOptions(),
             body: {
                 "remoteRHLRequest": {
-                    "command" : "LIGHT_ONLY",
+                    "command": "LIGHT_ONLY",
                     "authorizationKey": authorizationKey
                 }
             }
