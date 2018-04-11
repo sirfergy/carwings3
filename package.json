@@ -1,6 +1,6 @@
 {
   "name": "carwings3",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Node.js client library for the Nissan Leaf \"Carwings\" API",
   "main": "release/index.js",
   "types": "release/index.d.ts",
@@ -15,13 +15,13 @@
   },
   "homepage": "https://github.com/sirfergy/carwings3#readme",
   "devDependencies": {
-    "tslint": "^5.9.1",
-    "@types/request": "^2.47.0",
-    "@types/request-promise-native": "^1.0.14"
+    "tslint": "~5.9.1",
+    "typescript": "~2.8.1",
+    "@types/request": "~2.47.0",
+    "@types/request-promise-native": "~1.0.14"
   },
   "dependencies": {
-    "typescript": "^2.8.1",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5"
+    "request": "~2.85.0",
+    "request-promise-native": "~1.0.5"
   }
 }
