@@ -20,7 +20,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const response = yield requestPromise.post(`${this.url}/auth/authenticationForAAS?vin=${this.vin}`, Object.assign({}, this._getOptions(), { body: {
-                        "authenticate": {
+                        authenticate: {
                             "userid": username,
                             "brand-s": "N",
                             "language-s": "en",
@@ -41,7 +41,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const response = yield requestPromise.post(`${this.url}/auth/softLoginforAAS?vin=${this.vin}`, Object.assign({}, this._getOptions(), { body: {
-                        "authenticate": {
+                        authenticate: {
                             "userid": username,
                             "brand-s": "N",
                             "language-s": "en",
@@ -57,10 +57,16 @@ class Service {
             }
         });
     }
+    refreshBatteryStatus() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield requestPromise.get(`${this.url}/battery/vehicles/${this.vin}/getChargingStatusRequest`, Object.assign({}, this._getOptions()));
+            return response;
+        });
+    }
     activateHvac() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield requestPromise.post(`${this.url}/hvac/vehicles/${this.vin}/activateHVAC`, Object.assign({}, this._getOptions(), { body: {
-                    "executionTime": new Date().toISOString()
+                    executionTime: new Date().toISOString()
                 } }));
             return response;
         });
@@ -68,7 +74,7 @@ class Service {
     deactivateHvac() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield requestPromise.post(`${this.url}/hvac/vehicles/${this.vin}/deactivateHVAC`, Object.assign({}, this._getOptions(), { body: {
-                    "executionTime": new Date().toISOString()
+                    executionTime: new Date().toISOString()
                 } }));
             return response;
         });
@@ -76,8 +82,8 @@ class Service {
     unlockDoors(authorizationKey) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield requestPromise.post(`${this.url}/remote/vehicles/${this.vin}/accounts/${this.accountId}/rdul/createRDUL`, Object.assign({}, this._getOptions(), { body: {
-                    "remoteRequest": {
-                        "authorizationKey": authorizationKey
+                    remoteRequest: {
+                        authorizationKey: authorizationKey
                     }
                 } }));
             return response;
@@ -86,8 +92,8 @@ class Service {
     lockDoors(authorizationKey) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield requestPromise.post(`${this.url}/remote/vehicles/${this.vin}/accounts/${this.accountId}/rdl/createRDL`, Object.assign({}, this._getOptions(), { body: {
-                    "remoteRequest": {
-                        "authorizationKey": authorizationKey
+                    remoteRequest: {
+                        authorizationKey: authorizationKey
                     }
                 } }));
             return response;
@@ -96,10 +102,22 @@ class Service {
     flashLights(authorizationKey) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield requestPromise.post(`${this.url}/remote/vehicles/${this.vin}/accounts/${this.accountId}/rhl/createRHL`, Object.assign({}, this._getOptions(), { body: {
-                    "remoteRHLRequest": {
-                        "command": "LIGHT_ONLY",
-                        "authorizationKey": authorizationKey
+                    remoteRHLRequest: {
+                        command: "LIGHT_ONLY",
+                        authorizationKey: authorizationKey
                     }
+                } }));
+            return response;
+        });
+    }
+    findVehicleLocation() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const now = new Date();
+            const lastMonth = new Date(now.getDate() - 30);
+            const response = yield requestPromise.post(`${this.url}/vehicleLocator/vehicles/${this.vin}/refreshVehicleLocator`, Object.assign({}, this._getOptions(), { body: {
+                    serviceName: "MyCarFinderResult",
+                    acquiredDataUpperLimit: 1,
+                    searchPeriod: `${lastMonth.getFullYear()}${lastMonth.getMonth()}${lastMonth.getDay()},${now.getFullYear()}${now.getMonth()}${now.getDay()}`
                 } }));
             return response;
         });

@@ -1,6 +1,6 @@
 import * as requestPromise from "request-promise-native";
 import { RequestPromiseOptions } from "request-promise-native";
-import { IAuthorizationResponse, IRemoteResponse, IResponse, IHvacResponse } from "./models";
+import { IAuthorizationResponse, IRemoteResponse, IResponse, IHvacResponse, IVehicle, IVehicleLocatorResponse } from "./models";
 import { Agent } from "https";
 
 export class Service {
@@ -17,7 +17,7 @@ export class Service {
             const response: IAuthorizationResponse = await requestPromise.post(`${this.url}/auth/authenticationForAAS?vin=${this.vin}`, {
                 ...this._getOptions(),
                 body: {
-                    "authenticate": {
+                    authenticate: {
                         "userid": username,
                         "brand-s": "N",
                         "language-s": "en",
@@ -40,7 +40,7 @@ export class Service {
             const response: IAuthorizationResponse = await requestPromise.post(`${this.url}/auth/softLoginforAAS?vin=${this.vin}`, {
                 ...this._getOptions(),
                 body: {
-                    "authenticate": {
+                    authenticate: {
                         "userid": username,
                         "brand-s": "N",
                         "language-s": "en",
@@ -57,11 +57,19 @@ export class Service {
         }
     }
 
+    public async refreshBatteryStatus(): Promise<IVehicle> {
+        const response: IVehicle = await requestPromise.get(`${this.url}/battery/vehicles/${this.vin}/getChargingStatusRequest`, {
+            ...this._getOptions(),
+        });
+
+        return response;
+    }
+
     public async activateHvac(): Promise<IHvacResponse> {
         const response: IHvacResponse = await requestPromise.post(`${this.url}/hvac/vehicles/${this.vin}/activateHVAC`, {
             ...this._getOptions(),
             body: {
-                "executionTime": new Date().toISOString()
+                executionTime: new Date().toISOString()
             }
         });
 
@@ -72,7 +80,7 @@ export class Service {
         const response: IHvacResponse = await requestPromise.post(`${this.url}/hvac/vehicles/${this.vin}/deactivateHVAC`, {
             ...this._getOptions(),
             body: {
-                "executionTime": new Date().toISOString()
+                executionTime: new Date().toISOString()
             }
         });
 
@@ -83,8 +91,8 @@ export class Service {
         const response: IRemoteResponse = await requestPromise.post(`${this.url}/remote/vehicles/${this.vin}/accounts/${this.accountId}/rdul/createRDUL`, {
             ...this._getOptions(),
             body: {
-                "remoteRequest": {
-                    "authorizationKey": authorizationKey
+                remoteRequest: {
+                    authorizationKey: authorizationKey
                 }
             }
         });
@@ -96,8 +104,8 @@ export class Service {
         const response: IRemoteResponse = await requestPromise.post(`${this.url}/remote/vehicles/${this.vin}/accounts/${this.accountId}/rdl/createRDL`, {
             ...this._getOptions(),
             body: {
-                "remoteRequest": {
-                    "authorizationKey": authorizationKey
+                remoteRequest: {
+                    authorizationKey: authorizationKey
                 }
             }
         });
@@ -109,10 +117,25 @@ export class Service {
         const response: IRemoteResponse = await requestPromise.post(`${this.url}/remote/vehicles/${this.vin}/accounts/${this.accountId}/rhl/createRHL`, {
             ...this._getOptions(),
             body: {
-                "remoteRHLRequest": {
-                    "command": "LIGHT_ONLY",
-                    "authorizationKey": authorizationKey
+                remoteRHLRequest: {
+                    command: "LIGHT_ONLY",
+                    authorizationKey: authorizationKey
                 }
+            }
+        });
+
+        return response;
+    }
+
+    public async findVehicleLocation(): Promise<IVehicleLocatorResponse> {
+        const now = new Date();
+        const lastMonth = new Date(now.getDate() - 30);
+        const response: IVehicleLocatorResponse = await requestPromise.post(`${this.url}/vehicleLocator/vehicles/${this.vin}/refreshVehicleLocator`, {
+            ...this._getOptions(),
+            body: {
+                serviceName: "MyCarFinderResult",
+                acquiredDataUpperLimit: 1,
+                searchPeriod: `${lastMonth.getFullYear()}${lastMonth.getMonth()}${lastMonth.getDay()},${now.getFullYear()}${now.getMonth()}${now.getDay()}`
             }
         });
 
