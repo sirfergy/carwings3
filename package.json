@@ -1,6 +1,6 @@
 {
   "name": "carwings3",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Node.js client library for the Nissan Leaf \"Carwings\" API",
   "main": "release/index.js",
   "types": "release/index.d.ts",
