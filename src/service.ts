@@ -1,7 +1,6 @@
 import * as requestPromise from "request-promise-native";
 import { RequestPromiseOptions } from "request-promise-native";
-import { IAuthorizationResponse, IRemoteResponse, IResponse, IHvacResponse, IVehicle, IVehicleLocatorResponse } from "./models";
-import { Agent } from "https";
+import { IAuthorizationResponse, IHvacResponse, IRemoteResponse, IVehicle, IVehicleLocatorResponse } from "./models";
 
 export class Service {
     private readonly url = "https://icm.infinitiusa.com/NissanLeafProd/rest";

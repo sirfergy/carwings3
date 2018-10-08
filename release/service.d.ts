@@ -1,4 +1,4 @@
-import { IRemoteResponse, IHvacResponse, IVehicle, IVehicleLocatorResponse } from "./models";
+import { IHvacResponse, IRemoteResponse, IVehicle, IVehicleLocatorResponse } from "./models";
 export declare class Service {
     private vin;
     private country;
@@ -16,5 +16,5 @@ export declare class Service {
     lockDoors(authorizationKey: string): Promise<IRemoteResponse>;
     flashLights(authorizationKey: string): Promise<IRemoteResponse>;
     findVehicleLocation(): Promise<IVehicleLocatorResponse>;
-    private _getOptions();
+    private _getOptions;
 }
