@@ -41,3 +41,6 @@ sample/*.js
 
 # TypeScript Definitions
 typings
+
+# compiled output files
+lib
